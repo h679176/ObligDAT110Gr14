@@ -9,6 +9,11 @@ public class RPCServerStopImpl extends RPCRemoteImpl {
 		this.rpcserver = rpcserver; // Initialiser feltvariabelen
 	}
 
+	@Override
+	public void write(String message) {
+
+	}
+
 	// RPC server-side implementation of the built-in stop RPC method
 	public byte[] invoke(byte[] param) {
 

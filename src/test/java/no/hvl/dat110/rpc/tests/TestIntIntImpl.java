@@ -9,7 +9,12 @@ public class TestIntIntImpl extends RPCRemoteImpl {
 	public TestIntIntImpl(byte rpcid, RPCServer rpcserver) {
 		super(rpcid,rpcserver);
 	}
-	
+
+	@Override
+	public void write(String message) {
+
+	}
+
 	public byte[] invoke(byte[] request) {
 		
 		int x = RPCUtils.unmarshallInteger(request);

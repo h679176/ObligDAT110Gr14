@@ -12,6 +12,11 @@ public class SensorImpl extends RPCRemoteImpl {
 		super(rpcid,rpcserver);
 	}
 
+	@Override
+	public void write(String message) {
+
+	}
+
 	// implementation of the RPC method
 	public int read() {
 

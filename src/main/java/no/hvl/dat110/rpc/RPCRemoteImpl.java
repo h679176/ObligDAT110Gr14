@@ -8,6 +8,8 @@ public abstract class RPCRemoteImpl {
 		rpcserver.register(rpcid, this);
 	}
 
+	public abstract void write(String message);
+
 	// method that will be invoked by the server
 	// params
 	public abstract byte[] invoke(byte[] params);

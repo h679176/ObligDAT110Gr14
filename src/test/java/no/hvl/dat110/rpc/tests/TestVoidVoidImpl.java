@@ -9,7 +9,12 @@ public class TestVoidVoidImpl extends RPCRemoteImpl {
 	public TestVoidVoidImpl(byte rpcid, RPCServer rpcserver) {
 		super(rpcid,rpcserver);
 	}
-	
+
+	@Override
+	public void write(String message) {
+
+	}
+
 	public void m() {
 		System.out.println("void m() executed");
 	}

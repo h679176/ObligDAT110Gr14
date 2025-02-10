@@ -9,7 +9,12 @@ public class TestStringStringImpl extends RPCRemoteImpl {
 	public TestStringStringImpl(byte rpcid, RPCServer rpcserver) {
 		super(rpcid, rpcserver);
 	}
-	
+
+	@Override
+	public void write(String message) {
+
+	}
+
 	public byte[] invoke(byte[] request) {
 	
 		String str = RPCUtils.unmarshallString(request);
