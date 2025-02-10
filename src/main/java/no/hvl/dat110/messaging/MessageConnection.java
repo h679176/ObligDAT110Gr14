@@ -1,82 +1,58 @@
 package no.hvl.dat110.messaging;
 
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import no.hvl.dat110.TODO;
-
-
 public class MessageConnection {
 
-	private DataOutputStream outStream; // for writing bytes to the underlying TCP connection
-	private DataInputStream inStream; // for reading bytes from the underlying TCP connection
-	private Socket socket; // socket for the underlying TCP connection
-	
+	private Socket socket;
+	private DataInputStream inputStream;
+	private DataOutputStream outputStream;
+
 	public MessageConnection(Socket socket) {
+		this.socket = socket;
 
 		try {
-
-			this.socket = socket;
-
-			outStream = new DataOutputStream(socket.getOutputStream());
-
-			inStream = new DataInputStream (socket.getInputStream());
-
-		} catch (IOException ex) {
-
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
+			inputStream = new DataInputStream(socket.getInputStream());
+			outputStream = new DataOutputStream(socket.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
+	// Sender en melding
 	public void send(Message message) {
-
-		byte[] data;
-		
-		// TODO - START
-		// encapsulate the data contained in the Message and write to the output stream
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-			
-		// TODO - END
-
-	}
-
-	public Message receive() {
-
-		Message message = null;
-		byte[] data;
-		
-		// TODO - START
-		// read a segment from the input stream and decapsulate data into a Message
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		
-		return message;
-		
-	}
-
-	// close the connection by closing streams and the underlying socket	
-	public void close() {
-
 		try {
-			
-			outStream.close();
-			inStream.close();
+			byte[] data = message.getData();
+			outputStream.writeInt(data.length);
+			outputStream.write(data);
+			outputStream.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
+	// Mottar en melding
+	public Message receive() {
+		try {
+			int length = inputStream.readInt();
+			byte[] data = new byte[length];
+			inputStream.readFully(data);
+			return new Message(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	// Lukker tilkoblingen
+	public void close() {
+		try {
 			socket.close();
-			
-		} catch (IOException ex) {
-
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
